@@ -24,6 +24,7 @@ python -m c302.c302_Pharyngeal W2D
 python -m c302.c302_Full W2D
 python -m c302.c302_Muscles W2D
 python -m c302.c302_Oscillator W2D
+python -m c302.c302_FW W2D
 
 
 python -m c302.c302_IClamp A
