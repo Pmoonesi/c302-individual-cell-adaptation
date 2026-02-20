@@ -5,9 +5,9 @@
 
 Parameters and setting used to generate this network:
 
-    Data reader:                    cect.SpreadsheetDataReader
+    Data reader:                    cect.readers.SpreadsheetDataReader
     c302 version:                   0.11.1
-    cect version:                   0.2.6
+    cect version:                   0.3.1
     owmeta version:                 - not installed -
     owmeta_core version:            - not installed -
     Cells:                          ['URYDL', 'SMDDR', 'VD12', 'VB11', 'AS2']
