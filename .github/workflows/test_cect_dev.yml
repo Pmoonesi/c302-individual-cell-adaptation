@@ -19,10 +19,10 @@ jobs:
         python-version: [ "3.13" ]
 
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
 
     - name: Set up Python  ${{ matrix.python-version }}
-      uses: actions/setup-python@v5
+      uses: actions/setup-python@v6
       with:
         python-version:  ${{ matrix.python-version }}
 
@@ -38,7 +38,8 @@ jobs:
     - name: Install latest development version of cect
       run: |
         # This is where the latest cect is developed before a release is made, important to test this regularly. 
-        pip install git+https://github.com/pgleeson/ConnectomeToolbox
+        pip install git+https://github.com/pgleeson/ConnectomeToolbox@development
+
         pip list
 
     - name: Install c302
