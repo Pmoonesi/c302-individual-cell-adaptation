@@ -9,6 +9,7 @@
   <td align="center"><b><a href="https://github.com/openworm/c302/blob/master/c302/c302_Oscillator.py">Oscillator</a></b></td>
   <td align="center"><b><a href="https://github.com/openworm/c302/blob/master/c302/c302_Muscles.py">Muscles</a></b></td>
   <td align="center"><b><a href="https://github.com/openworm/c302/blob/master/c302/c302_Full.py">Full</a></b></td>
+  <td align="center"><b><a href="https://github.com/openworm/c302/blob/master/c302/c302_FW.py">FW</a></b></td>
 </tr>
 
 <tr>
@@ -47,6 +48,11 @@
     <img alt="?" src="images/neurons_A_Full.png" height="80"/></a>
     <br/><a href="https://github.com/openworm/c302/blob/master/examples/c302_A_Full.net.nml">NML</a>
     &nbsp;<a href="http://opensourcebrain.org/projects/celegans?explorer=https://raw.githubusercontent.com/openworm/c302/master/examples/c302_A_Full.net.nml">OSB</a>
+  </td>
+  <td><a href="summary_A_FW.md">
+    <img alt="?" src="images/neurons_A_FW.png" height="80"/></a>
+    <br/><a href="https://github.com/openworm/c302/blob/master/examples/c302_A_FW.net.nml">NML</a>
+    &nbsp;<a href="http://opensourcebrain.org/projects/celegans?explorer=https://raw.githubusercontent.com/openworm/c302/master/examples/c302_A_FW.net.nml">OSB</a>
   </td>
 </tr>
 
@@ -87,6 +93,11 @@
     <br/><a href="https://github.com/openworm/c302/blob/master/examples/c302_B_Full.net.nml">NML</a>
     &nbsp;<a href="http://opensourcebrain.org/projects/celegans?explorer=https://raw.githubusercontent.com/openworm/c302/master/examples/c302_B_Full.net.nml">OSB</a>
   </td>
+  <td><a href="summary_B_FW.md">
+    <img alt="?" src="images/neurons_B_FW.png" height="80"/></a>
+    <br/><a href="https://github.com/openworm/c302/blob/master/examples/c302_B_FW.net.nml">NML</a>
+    &nbsp;<a href="http://opensourcebrain.org/projects/celegans?explorer=https://raw.githubusercontent.com/openworm/c302/master/examples/c302_B_FW.net.nml">OSB</a>
+  </td>
 </tr>
 
 <tr>
@@ -125,6 +136,11 @@
     <img alt="?" src="images/neurons_C0_Full.png" height="80"/></a>
     <br/><a href="https://github.com/openworm/c302/blob/master/examples/c302_C0_Full.net.nml">NML</a>
     &nbsp;<a href="http://opensourcebrain.org/projects/celegans?explorer=https://raw.githubusercontent.com/openworm/c302/master/examples/c302_C0_Full.net.nml">OSB</a>
+  </td>
+  <td><a href="summary_C0_FW.md">
+    <img alt="?" src="images/neurons_C0_FW.png" height="80"/></a>
+    <br/><a href="https://github.com/openworm/c302/blob/master/examples/c302_C0_FW.net.nml">NML</a>
+    &nbsp;<a href="http://opensourcebrain.org/projects/celegans?explorer=https://raw.githubusercontent.com/openworm/c302/master/examples/c302_C0_FW.net.nml">OSB</a>
   </td>
 </tr>
 
@@ -165,6 +181,11 @@
     <br/><a href="https://github.com/openworm/c302/blob/master/examples/c302_C_Full.net.nml">NML</a>
     &nbsp;<a href="http://opensourcebrain.org/projects/celegans?explorer=https://raw.githubusercontent.com/openworm/c302/master/examples/c302_C_Full.net.nml">OSB</a>
   </td>
+  <td><a href="summary_C_FW.md">
+    <img alt="?" src="images/neurons_C_FW.png" height="80"/></a>
+    <br/><a href="https://github.com/openworm/c302/blob/master/examples/c302_C_FW.net.nml">NML</a>
+    &nbsp;<a href="http://opensourcebrain.org/projects/celegans?explorer=https://raw.githubusercontent.com/openworm/c302/master/examples/c302_C_FW.net.nml">OSB</a>
+  </td>
 </tr>
 
 <tr>
@@ -203,6 +224,11 @@
     <img alt="?" src="images/neurons_C1_Full.png" height="80"/></a>
     <br/><a href="https://github.com/openworm/c302/blob/master/examples/c302_C1_Full.net.nml">NML</a>
     &nbsp;<a href="http://opensourcebrain.org/projects/celegans?explorer=https://raw.githubusercontent.com/openworm/c302/master/examples/c302_C1_Full.net.nml">OSB</a>
+  </td>
+  <td><a href="summary_C1_FW.md">
+    <img alt="?" src="images/neurons_C1_FW.png" height="80"/></a>
+    <br/><a href="https://github.com/openworm/c302/blob/master/examples/c302_C1_FW.net.nml">NML</a>
+    &nbsp;<a href="http://opensourcebrain.org/projects/celegans?explorer=https://raw.githubusercontent.com/openworm/c302/master/examples/c302_C1_FW.net.nml">OSB</a>
   </td>
 </tr>
 
@@ -243,6 +269,11 @@
     <br/><a href="https://github.com/openworm/c302/blob/master/examples/c302_C2_Full.net.nml">NML</a>
     &nbsp;<a href="http://opensourcebrain.org/projects/celegans?explorer=https://raw.githubusercontent.com/openworm/c302/master/examples/c302_C2_Full.net.nml">OSB</a>
   </td>
+  <td><a href="summary_C2_FW.md">
+    <img alt="?" src="images/neurons_C2_FW.png" height="80"/></a>
+    <br/><a href="https://github.com/openworm/c302/blob/master/examples/c302_C2_FW.net.nml">NML</a>
+    &nbsp;<a href="http://opensourcebrain.org/projects/celegans?explorer=https://raw.githubusercontent.com/openworm/c302/master/examples/c302_C2_FW.net.nml">OSB</a>
+  </td>
 </tr>
 
 <tr>
@@ -281,6 +312,11 @@
     <img alt="?" src="images/neurons_D_Full.png" height="80"/></a>
     <br/><a href="https://github.com/openworm/c302/blob/master/examples/c302_D_Full.net.nml">NML</a>
     &nbsp;<a href="http://opensourcebrain.org/projects/celegans?explorer=https://raw.githubusercontent.com/openworm/c302/master/examples/c302_D_Full.net.nml">OSB</a>
+  </td>
+  <td><a href="summary_D_FW.md">
+    <img alt="?" src="images/neurons_D_FW.png" height="80"/></a>
+    <br/><a href="https://github.com/openworm/c302/blob/master/examples/c302_D_FW.net.nml">NML</a>
+    &nbsp;<a href="http://opensourcebrain.org/projects/celegans?explorer=https://raw.githubusercontent.com/openworm/c302/master/examples/c302_D_FW.net.nml">OSB</a>
   </td>
 </tr>
 
@@ -321,6 +357,11 @@
     <br/><a href="https://github.com/openworm/c302/blob/master/examples/c302_D1_Full.net.nml">NML</a>
     &nbsp;<a href="http://opensourcebrain.org/projects/celegans?explorer=https://raw.githubusercontent.com/openworm/c302/master/examples/c302_D1_Full.net.nml">OSB</a>
   </td>
+  <td><a href="summary_D1_FW.md">
+    <img alt="?" src="images/neurons_D1_FW.png" height="80"/></a>
+    <br/><a href="https://github.com/openworm/c302/blob/master/examples/c302_D1_FW.net.nml">NML</a>
+    &nbsp;<a href="http://opensourcebrain.org/projects/celegans?explorer=https://raw.githubusercontent.com/openworm/c302/master/examples/c302_D1_FW.net.nml">OSB</a>
+  </td>
 </tr>
 
 <tr>
@@ -359,6 +400,11 @@
     <img alt="?" src="images/neurons_W2D_Full.png" height="80"/></a>
     <br/><a href="https://github.com/openworm/c302/blob/master/examples/c302_W2D_Full.net.nml">NML</a>
     &nbsp;<a href="http://opensourcebrain.org/projects/celegans?explorer=https://raw.githubusercontent.com/openworm/c302/master/examples/c302_W2D_Full.net.nml">OSB</a>
+  </td>
+  <td><a href="summary_W2D_FW.md">
+    <img alt="?" src="images/neurons_W2D_FW.png" height="80"/></a>
+    <br/><a href="https://github.com/openworm/c302/blob/master/examples/c302_W2D_FW.net.nml">NML</a>
+    &nbsp;<a href="http://opensourcebrain.org/projects/celegans?explorer=https://raw.githubusercontent.com/openworm/c302/master/examples/c302_W2D_FW.net.nml">OSB</a>
   </td>
 </tr>
 </table>
