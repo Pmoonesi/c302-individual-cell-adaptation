@@ -1,7 +1,7 @@
 ### Parameter config summary 
 <h2>c302 simulation</h2>
 <p>Parameter set: <b>D</b>; configuration: <b>IClamp</b></p>
-<p>Generated on: Wed, 10 Dec 2025 with c302 v0.11.1</p><br/>
+<p>Generated on: Mon, 30 Mar 2026 with c302 v0.12.0</p><br/>
 <table>
 
 <tr>

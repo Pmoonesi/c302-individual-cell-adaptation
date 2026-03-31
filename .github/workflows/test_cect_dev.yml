@@ -1,6 +1,8 @@
-name: Non-OMV-tests
+name: Test latest cect
 
 on:
+  schedule:
+    - cron: "1 1 1 * *"
   push:
     branches: [ master, development, experimental, ow* ]
   pull_request:
@@ -14,10 +16,7 @@ jobs:
       fail-fast: false
       matrix:
         runs-on: [ubuntu-latest, macos-latest]
-        python-version: [ "3.10", "3.12", "3.13" ]
-        exclude:
-          - runs-on: macos-latest
-            python-version: "3.8"
+        python-version: [ "3.13" ]
 
     steps:
     - uses: actions/checkout@v6
@@ -36,6 +35,13 @@ jobs:
       run: |
         pip install git+https://github.com/OpenSourceBrain/osb-model-validation
         
+    - name: Install latest development version of cect
+      run: |
+        # This is where the latest cect is developed before a release is made, important to test this regularly. 
+        pip install git+https://github.com/pgleeson/ConnectomeToolbox@development
+
+        pip list
+
     - name: Install c302
       run: |
         pip install .

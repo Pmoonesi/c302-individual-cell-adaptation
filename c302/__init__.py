@@ -67,8 +67,8 @@ from cect.Cells import BODY_WALL_MUSCLE_NAMES
 #
 # DEFAULT_DATA_READER = "cect.White_whole"
 # DEFAULT_DATA_READER = "cect.Cook2019HermReader"
-DEFAULT_DATA_READER = "cect.SpreadsheetDataReader"
-FW_DATA_READER = "cect.UpdatedSpreadsheetDataReader2"
+DEFAULT_DATA_READER = "cect.readers.SpreadsheetDataReader"
+FW_DATA_READER = "cect.readers.UpdatedSpreadsheetDataReader2"
 
 
 here = os.path.abspath(os.path.dirname(__file__))
