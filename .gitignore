@@ -121,3 +121,12 @@ arm64
 /examples/parametersweep/average_last_1percent_GenericNeuronCellW2D.png
 /examples/parametersweep/heatmap_GenericNeuronCellW2D.png
 openworm/
+
+
+.c302venv/
+activate.sh
+.gitignore
+clean.sh
+osb-model-validation/
+requirements.txt
+experiments/

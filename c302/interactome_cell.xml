@@ -1,0 +1,53 @@
+<neuroml xmlns="http://www.neuroml.org/schema/neuroml2"  xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.neuroml.org/schema/neuroml2 https://raw.github.com/NeuroML/NeuroML2/development/Schemas/NeuroML2/NeuroML_v2beta4.xsd" id="cell_B">
+
+    <!-- Definition of new model for Cell-->
+        
+    <ComponentType name="InteractomeNeuron" 
+                extends="baseCell"
+                description="Kim et al. 2019 neuron">
+
+        <Parameter name="C" dimension="capacitance"/>
+        <Parameter name="G_c" dimension="conductance"/>
+        <Parameter name="E_cell" dimension="voltage"/>
+        <Parameter name="a_r" dimension="per_time"/>
+        <Parameter name="a_d" dimension="per_time"/>
+        <Parameter name="beta" dimension="per_voltage"/>
+        <Parameter name="Vth" dimension="voltage"/>
+        <Parameter name="spike_thresh" dimension="voltage"/>
+
+        <EventPort name="spike" direction="out"/>
+        <Attachments name="synapses" type="basePointCurrent"/>
+
+        <Exposure name="s" dimension="none"/>
+        <Exposure name="v" dimension="voltage"/>  <!-- already in base -->
+
+        <Dynamics>
+            <StateVariable name="v" dimension="voltage" exposure="v"/>
+            <StateVariable name="s" dimension="none" exposure="s"/>
+
+            <OnStart>
+                <StateAssignment variable="v" value="E_cell" />
+            </OnStart>
+
+            <DerivedVariable name="phi" 
+                value="1 / (1 + exp(-beta * (v - Vth)))"/>
+            <DerivedVariable name="i_leak" 
+                value="G_c * (v - E_cell)"/>
+            <DerivedVariable name="iSyn" dimension="current"
+                select="synapses[*]/i" reduce="add"/>
+
+            <TimeDerivative variable="v"
+                value="(-i_leak + iSyn) / C"/>
+            <TimeDerivative variable="s"
+                value="a_r * phi * (1 - s) - a_d * s"/>
+
+            <OnCondition test="v .gt. spike_thresh">
+                <EventOut port="spike"/>
+            </OnCondition>
+        </Dynamics>
+
+    </ComponentType>
+
+
+    
+</neuroml>

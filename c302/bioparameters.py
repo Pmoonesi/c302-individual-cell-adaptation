@@ -149,6 +149,9 @@ class c302ModelPrototype(ParameterisedModelPrototype):
 
     def is_level_X(self):
         return self.level.startswith("X")
+    
+    def is_level_I(self):
+        return self.level.startswith("I")
 
     def get_conn_param(
         self,

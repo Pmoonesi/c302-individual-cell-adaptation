@@ -772,6 +772,9 @@ def generate(
     elif params.is_level_X():
         nml_doc.cells.append(params.generic_muscle_cell)
         nml_doc.cells.append(params.generic_neuron_cell)
+    elif params.is_level_I():
+        nml_doc.cells.append(params.generic_muscle_cell)
+        nml_doc.cells.append(params.generic_neuron_cell)
 
     net = Network(id=net_id)
 
@@ -999,6 +1002,14 @@ def generate(
                     plot["quantity"] = "%s/0/%s/activity" % (cell, cell_id)
                     lems_info["activity_plots"].append(plot)
 
+                if params.is_level_I():
+                    plot = {}
+
+                    plot["cell"] = cell
+                    plot["colour"] = get_random_colour_hex()
+                    plot["quantity"] = "%s/0/%s/s" % (cell, cell_id)
+                    lems_info["activity_plots"].append(plot)
+
                 if is_cond_based_cell(params):
                     plot = {}
 
@@ -1017,6 +1028,13 @@ def generate(
                 save["cell"] = cell
                 save["quantity"] = "%s/0/%s/activity" % (cell, cell_id)
                 lems_info["activity_to_save"].append(save)
+
+            if params.is_level_I():
+                save = {}
+                save["cell"] = cell
+                save["quantity"] = "%s/0/%s/s" % (cell, cell_id)
+                lems_info["activity_to_save"].append(save)
+
             if is_cond_based_cell(params):
                 save = {}
                 save["cell"] = cell

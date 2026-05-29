@@ -1,0 +1,28 @@
+<neuroml xmlns="http://www.neuroml.org/schema/neuroml2"  xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.neuroml.org/schema/neuroml2 https://raw.github.com/NeuroML/NeuroML2/development/Schemas/NeuroML2/NeuroML_v2beta4.xsd" id="cell_C">
+
+    <ComponentType name="GradedSynapse3"
+                   extends="baseGradedSynapse"
+                   description="Graded/analog synapse. Based on Kunert et al 2017 http://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1005303">
+
+        <Property name="weight" dimension="none" defaultValue="1"/>
+
+        <Parameter name="conductance" dimension="conductance"/>
+
+        <Parameter name="erev" dimension="voltage" description="Synaptic reversal potential"/>
+
+        <Exposure name="i" dimension="current"/>
+
+        <Requirement name="v" dimension="voltage"/>
+
+        <InstanceRequirement name="peer" type="baseGradedSynapse"/>
+
+        <Dynamics>
+
+            <DerivedVariable name="speer" dimension="voltage" select="peer/s"/>
+
+            <DerivedVariable name="i" exposure="i"  value="weight * conductance * speer * (erev-v)"/>
+
+        </Dynamics>
+    </ComponentType>
+
+</neuroml>
