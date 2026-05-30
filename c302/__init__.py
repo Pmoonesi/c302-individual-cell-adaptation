@@ -85,6 +85,8 @@ OWMETA_CACHED_DATA_FILE = (
     os.path.dirname(os.path.abspath(__file__)) + "/data/owmeta_cache.json"
 )
 
+cell_id_strings = {}
+
 
 def print_(msg, print_it=True):  # print_it=False when not verbose
     if print_it:
@@ -504,20 +506,30 @@ def is_cond_based_cell(params):
 
 
 def get_cell_id_string(cell, params, muscle=False):
+
+    if cell in cell_id_strings:
+        return cell_id_strings[cell]
+
     if cell in get_muscle_names():
         muscle = True
-    if not params.is_level_D():
+
+    if params.is_level_D():
+        if not muscle:
+            return "../%s/0/%s" % (cell, cell)
+        else:
+            return "../%s/0/%s" % (cell, params.generic_muscle_cell.id)
+        
+    # elif params.is_level_I():
+    #     return "../%s/0/%s_%s_cell" % (cell, cell, "muscle" if muscle else "neuron")
+
+    else:
         if not muscle:
             return "../%s/0/%s" % (cell, params.generic_neuron_cell.id)
         else:
             return "../%s/0/%s" % (cell, params.generic_muscle_cell.id)
 
-    else:
-        if not muscle:
-            return "../%s/0/%s" % (cell, cell)
-        else:
-            return "../%s/0/%s" % (cell, params.generic_muscle_cell.id)
-
+def set_cell_id_string(cell, cell_id):
+    cell_id_strings[cell] = "../%s/0/%s" % (cell, cell_id)
 
 def regex_match(pattern, str):
     return is_regex_string(pattern) and re.match(pattern, str)
@@ -887,21 +899,26 @@ def generate(
         if cells is None or cell in cells:
             inst = Instance(id="0")
 
-            if not params.is_level_D():
-                # build a Population data structure out of the cell name
-                pop0 = Population(
-                    id=cell,
-                    component=params.generic_neuron_cell.id,
-                    type="populationList",
-                    size="1",
-                )
-                cell_id = params.generic_neuron_cell.id
-            else:
-                # build a Population data structure out of the cell name
-                pop0 = Population(
-                    id=cell, component=cell, type="populationList", size="1"
-                )
+            # decide what the cell_id will be
+            if params.is_level_D():
                 cell_id = cell
+            elif params.is_level_I():
+                # Find out if our cell is customized for I parameters or not
+                current_cell = params.get_cell(cell, "neuron")
+                if current_cell not in nml_doc.cells:
+                    nml_doc.cells.append(current_cell)
+                cell_id = current_cell.id
+                
+            else:
+                cell_id = params.generic_neuron_cell.id
+
+            # add the string id to the cache dictionary
+            set_cell_id_string(cell, cell_id)
+            
+            # build a Population data structure out of the cell name
+            pop0 = Population(
+                    id=cell, component=cell_id, type="populationList", size="1"
+            )
 
             # neuron, neuron.type(), neuron.receptor(), neuron.neurotransmitter(), short, color
             if all_neuron_info is not None:
@@ -1066,13 +1083,27 @@ def generate(
         for muscle in muscles_to_include:
             inst = Instance(id="0")
 
+            current_cell = None
+
+            # decide what the cell_id will be
+            if params.is_level_I():
+                # Find out if our cell is customized for I parameters or not
+                current_cell = params.get_cell(cell, "muscle")
+                if current_cell not in nml_doc.cells:
+                    nml_doc.cells.append(current_cell)
+            else:
+                current_cell = params.generic_muscle_cell
+
+            cell_id = current_cell.id
+
+            # add the string id to the cache dictionary
+            set_cell_id_string(cell, cell_id)
+            
             # build a Population data structure out of the cell name
             pop0 = Population(
-                id=muscle,
-                component=params.generic_muscle_cell.id,
-                type="populationList",
-                size="1",
+                    id=muscle, component=cell_id, type="populationList", size="1"
             )
+
             pop0.properties.append(Property("color", "0 .6 0"))
             pop0.instances.append(inst)
 
@@ -1096,50 +1127,50 @@ def generate(
 
             plot["cell"] = muscle
             plot["colour"] = get_random_colour_hex()
-            plot["quantity"] = "%s/0/%s/v" % (muscle, params.generic_muscle_cell.id)
+            plot["quantity"] = "%s/0/%s/v" % (muscle, cell_id)
             lems_info["muscle_plots"].append(plot)
 
-            if params.generic_muscle_cell.__class__.__name__ == "IafActivityCell":
+            if current_cell.__class__.__name__ == "IafActivityCell":
                 plot = {}
 
                 plot["cell"] = muscle
                 plot["colour"] = get_random_colour_hex()
                 plot["quantity"] = "%s/0/%s/activity" % (
                     muscle,
-                    params.generic_muscle_cell.id,
+                    cell_id,
                 )
                 lems_info["muscle_activity_plots"].append(plot)
 
-            if params.generic_muscle_cell.__class__.__name__ == "Cell":
+            if current_cell.__class__.__name__ == "Cell":
                 plot = {}
 
                 plot["cell"] = muscle
                 plot["colour"] = get_random_colour_hex()
                 plot["quantity"] = "%s/0/%s/caConc" % (
                     muscle,
-                    params.generic_muscle_cell.id,
+                    cell_id,
                 )
                 lems_info["muscle_activity_plots"].append(plot)
 
             save = {}
             save["cell"] = muscle
-            save["quantity"] = "%s/0/%s/v" % (muscle, params.generic_muscle_cell.id)
+            save["quantity"] = "%s/0/%s/v" % (muscle, cell_id)
             lems_info["muscles_to_save"].append(save)
 
-            if params.generic_muscle_cell.__class__.__name__ == "IafActivityCell":
+            if current_cell.__class__.__name__ == "IafActivityCell":
                 save = {}
                 save["cell"] = muscle
                 save["quantity"] = "%s/0/%s/activity" % (
                     muscle,
-                    params.generic_muscle_cell.id,
+                    cell_id,
                 )
                 lems_info["muscles_activity_to_save"].append(save)
-            if params.generic_muscle_cell.__class__.__name__ == "Cell":
+            if current_cell.__class__.__name__ == "Cell":
                 save = {}
                 save["cell"] = muscle
                 save["quantity"] = "%s/0/%s/caConc" % (
                     muscle,
-                    params.generic_muscle_cell.id,
+                    cell_id,
                 )
                 lems_info["muscles_activity_to_save"].append(save)
 
@@ -1148,7 +1179,7 @@ def generate(
             muscle_count += 1
 
             if cells_to_stimulate is not None and muscle in cells_to_stimulate:
-                target = "../%s/0/%s" % (pop0.id, params.generic_muscle_cell.id)
+                target = "../%s/0/%s" % (pop0.id, cell_id)
 
                 input_list = InputList(
                     id="Input_%s_%s" % (muscle, params.offset_current.id),

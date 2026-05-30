@@ -171,27 +171,6 @@ class ParameterisedModel(c302ModelPrototype):
             amplitude=self.get_bioparameter("unphysiological_offset_current").value,
         )
 
-        # self.concentration_model_neuron = FixedFactorConcentrationModel(
-        #     id="CaPool",
-        #     ion="ca",
-        #     resting_conc="0 mM",
-        #     decay_constant=self.get_bioparameter("ca_conc_decay_time").value,
-        #     rho=self.get_bioparameter("ca_conc_rho").value,
-        # )
-
-        # self.concentration_model_muscle = FixedFactorConcentrationModel(
-        #     id="CaPoolMuscle",
-        #     ion="ca",
-        #     resting_conc="0 mM",
-        #     decay_constant=self.get_bioparameter("ca_conc_decay_time_muscle").value,
-        #     rho=self.get_bioparameter("ca_conc_rho_muscle").value,
-        # )
-
-        # self.concentration_model = [
-        #     # self.concentration_model_neuron,
-        #     # self.concentration_model_muscle,
-        # ]
-
     def create_neuron_to_neuron_syn(self):
         self.neuron_to_neuron_exc_syn = GradedSynapse3(
             id="neuron_to_neuron_exc_syn",
@@ -227,6 +206,37 @@ class ParameterisedModel(c302ModelPrototype):
             id="neuron_to_muscle_elec_syn",
             conductance=self.get_bioparameter("neuron_to_muscle_elec_syn_gbase").value,
         )
+
+    def get_cell(self, cell, type):
+        self.found_specific_param = False
+
+        C = self.get_cell_param(cell, "%s_%s", "neuron_%s", "capacitance")
+        G_c = self.get_cell_param(cell, "%s_%s", "neuron_%s", "leak_conductance")
+        E_cell = self.get_cell_param(cell, "%s_%s", "neuron_%s", "leak_potential")
+        a_r = self.get_cell_param(cell, "%s_%s", "neuron_%s", "activity_rise")
+        a_d = self.get_cell_param(cell, "%s_%s", "neuron_%s", "activity_decay")
+        beta = self.get_cell_param(cell, "%s_%s", "neuron_%s", "sigmoid_beta")
+        Vth = self.get_cell_param(cell, "%s_%s", "neuron_%s", "v_threshold")
+        spike_thresh = self.get_cell_param(cell, "%s_%s", "neuron_%s", "spike_threshold")
+
+        cell_obj = None
+
+        if self.found_specific_param:
+            cell_id = "%s_%s_cell" % (cell, type)
+            cell_obj = InteractomeNeuron(id=cell_id,
+                                C=C,
+                                G_c=G_c,
+                                E_cell=E_cell,
+                                a_r=a_r,
+                                a_d=a_d,
+                                beta=beta,
+                                Vth=Vth,
+                                spike_thresh=spike_thresh)
+
+        else:
+            cell_obj = self.generic_neuron_cell if type == "neuron" else self.generic_muscle_cell
+        
+        return cell_obj
 
     def get_elec_syn(self, pre_cell, post_cell, type):
         self.found_specific_param = False

@@ -172,6 +172,25 @@ class c302ModelPrototype(ParameterisedModelPrototype):
         if not def_param:
             return None
         return def_param.value
+    
+    def get_cell_param(
+        self,
+        cell,
+        specific_cell_template,
+        default_cell_template,
+        param_name,
+    ):
+        param = self.get_bioparameter(
+            specific_cell_template % (cell, param_name),
+            warn_if_missing=False,
+        )
+        if param:
+            self.found_specific_param = True
+            return param.value
+        def_param = self.get_bioparameter(default_cell_template % param_name)
+        if not def_param:
+            return None
+        return def_param.value
 
     def get_syn(self, pre_cell, post_cell, type, pol):
         if pol == "elec":

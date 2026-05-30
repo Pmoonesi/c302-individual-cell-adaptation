@@ -45,7 +45,11 @@ def setup(
         "unphysiological_offset_current_dur", "400 ms", "Testing Full net", "0"
     )
 
-    reference = "c302_%s_Full_my_version" % parameter_set
+    params.add_bioparameter(
+        "AVBL_v_threshold", "10 mV",  "Testing Full net", "0"
+    )
+
+    reference = "c302_%s_Full_Interactome" % parameter_set
 
     cell_names, conns = c302.get_cell_names_and_connection(data_reader)
 
