@@ -14,6 +14,8 @@
         <Parameter name="beta" dimension="per_voltage"/>
         <Parameter name="Vth" dimension="voltage"/>
         <Parameter name="spike_thresh" dimension="voltage"/>
+        <Parameter name="V_init" dimension="voltage"/>
+        <Parameter name="s_init" dimension="none"/>
 
         <EventPort name="spike" direction="out"/>
         <Attachments name="synapses" type="basePointCurrent"/>
@@ -26,7 +28,8 @@
             <StateVariable name="s" dimension="none" exposure="s"/>
 
             <OnStart>
-                <StateAssignment variable="v" value="E_cell" />
+                <StateAssignment variable="v" value="V_init" />
+                <StateAssignment variable="s" value="s_init" />
             </OnStart>
 
             <DerivedVariable name="phi" 

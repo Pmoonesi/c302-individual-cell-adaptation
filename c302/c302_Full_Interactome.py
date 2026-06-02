@@ -47,16 +47,28 @@ def set_vth_bioparams(params, cells_to_stimulate, offset_current):
             "%s_v_threshold" % (get_c302_name(neuron)), "%.4f mV" % (vth),  "Testing Full net", "0"
         )
 
-def set_leak_potential_bioparams(params, base, data_reader="KimDataReaderV3"):
+def set_init_potential_bioparams(params, base, data_reader="KimDataReaderV3"):
     magnitude, unit = split_neuroml_quantity(base)
     names, conns = get_cell_names_and_connection(data_reader)
 
     for neuron in names:
 
-        randomized_leak_pot = magnitude + random.normalvariate(0, 1)
+        randomized_leak_pot = magnitude + random.normalvariate(0, 1) * 1e-4
 
         params.add_bioparameter(
-            "%s_leak_potential" % (get_c302_name(neuron)), "%.4f mV" % (randomized_leak_pot),  "Testing Full net", "0"
+            "%s_v_init" % (get_c302_name(neuron)), "%.6f mV" % (randomized_leak_pot),  "Testing Full net", "0"
+        )
+
+def set_init_activity_bioparams(params, base, data_reader="KimDataReaderV3"):
+    magnitude, unit = split_neuroml_quantity(base)
+    names, conns = get_cell_names_and_connection(data_reader)
+
+    for neuron in names:
+
+        randomized_leak_pot = magnitude + random.normalvariate(0, 1) * 1e-4
+
+        params.add_bioparameter(
+            "%s_s_init" % (get_c302_name(neuron)), "%.6f" % (randomized_leak_pot),  "Testing Full net", "0"
         )
 
 
@@ -88,8 +100,10 @@ def setup(
     ]
     # cells_to_plot = ["AVBL"]
 
+    stimuli_magnitude = "1.5nA"
+
     params.set_bioparameter(
-        "unphysiological_offset_current", "5pA", "Testing Full net", "0"
+        "unphysiological_offset_current", stimuli_magnitude, "Testing Full net", "0"
 
     )
     params.set_bioparameter(
@@ -99,9 +113,11 @@ def setup(
         "unphysiological_offset_current_dur", "400 ms", "Testing Full net", "0"
     )
 
-    set_vth_bioparams(params, cells_to_stimulate, "5pA")
+    set_vth_bioparams(params, cells_to_stimulate, stimuli_magnitude)
 
-    set_leak_potential_bioparams(params, "-35 mV", data_reader=data_reader)
+    set_init_potential_bioparams(params, "0 mV", data_reader=data_reader)
+
+    set_init_activity_bioparams(params, "0", data_reader=data_reader)
 
     reference = "c302_%s_Full_Interactome" % parameter_set
 

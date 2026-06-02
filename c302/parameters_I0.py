@@ -58,6 +58,14 @@ class ParameterisedModel(c302ModelPrototype):
         )
 
         self.add_bioparameter(
+            "neuron_v_init", "0 mV", "BlindGuess", "0.1"
+        )
+
+        self.add_bioparameter(
+            "neuron_s_init", "0", "BlindGuess", "0.1"
+        )
+
+        self.add_bioparameter(
             "neuron_spike_threshold", "1000 mV", "BlindGuess", "0.1"
         )
 
@@ -131,6 +139,8 @@ class ParameterisedModel(c302ModelPrototype):
         a_d= self.get_bioparameter("neuron_activity_decay").value
         beta= self.get_bioparameter("neuron_sigmoid_beta").value
         Vth= self.get_bioparameter("neuron_v_threshold").value
+        V_init= self.get_bioparameter("neuron_v_init").value
+        s_init= self.get_bioparameter("neuron_s_init").value
         spike_thresh= self.get_bioparameter("neuron_spike_threshold").value
 
         self.generic_muscle_cell = InteractomeNeuron(id="GenericMuscleCell",
@@ -141,6 +151,8 @@ class ParameterisedModel(c302ModelPrototype):
                                                      a_d=a_d,
                                                      beta=beta,
                                                      Vth=Vth,
+                                                     V_init=V_init,
+                                                     s_init=s_init,
                                                      spike_thresh=spike_thresh)
 
     def create_generic_neuron_cell(self):
@@ -151,6 +163,8 @@ class ParameterisedModel(c302ModelPrototype):
         a_d= self.get_bioparameter("neuron_activity_decay").value
         beta= self.get_bioparameter("neuron_sigmoid_beta").value
         Vth= self.get_bioparameter("neuron_v_threshold").value
+        V_init= self.get_bioparameter("neuron_v_init").value
+        s_init= self.get_bioparameter("neuron_s_init").value
         spike_thresh= self.get_bioparameter("neuron_spike_threshold").value
 
         self.generic_neuron_cell = InteractomeNeuron(id="GenericNeuronCell",
@@ -161,6 +175,8 @@ class ParameterisedModel(c302ModelPrototype):
                                                      a_d=a_d,
                                                      beta=beta,
                                                      Vth=Vth,
+                                                     V_init=V_init,
+                                                     s_init=s_init,
                                                      spike_thresh=spike_thresh)
 
     def create_offset_current(self):
@@ -217,6 +233,8 @@ class ParameterisedModel(c302ModelPrototype):
         a_d = self.get_cell_param(cell, "%s_%s", "neuron_%s", "activity_decay")
         beta = self.get_cell_param(cell, "%s_%s", "neuron_%s", "sigmoid_beta")
         Vth = self.get_cell_param(cell, "%s_%s", "neuron_%s", "v_threshold")
+        V_init = self.get_cell_param(cell, "%s_%s", "neuron_%s", "v_init")
+        s_init = self.get_cell_param(cell, "%s_%s", "neuron_%s", "s_init")
         spike_thresh = self.get_cell_param(cell, "%s_%s", "neuron_%s", "spike_threshold")
 
         cell_obj = None
@@ -231,6 +249,8 @@ class ParameterisedModel(c302ModelPrototype):
                                 a_d=a_d,
                                 beta=beta,
                                 Vth=Vth,
+                                V_init=V_init,
+                                s_init=s_init,
                                 spike_thresh=spike_thresh)
 
         else:
@@ -341,7 +361,7 @@ class ParameterisedModel(c302ModelPrototype):
         return isinstance(syn, GapJunction)
 
 class InteractomeNeuron:
-    def __init__(self, id, C, G_c, E_cell, a_r, a_d, beta, Vth, spike_thresh):
+    def __init__(self, id, C, G_c, E_cell, a_r, a_d, beta, Vth, V_init, s_init, spike_thresh):
         self.id = id
         self.C = C
         self.G_c = G_c
@@ -350,12 +370,14 @@ class InteractomeNeuron:
         self.a_d = a_d
         self.beta = beta
         self.Vth = Vth
+        self.V_init = V_init
+        self.s_init = s_init
         self.spike_thresh = spike_thresh
 
     def export(self, outfile, level, namespace, name_, pretty_print=True, **kwargs_):
         outfile.write(
             "    " * level
-            + '<InteractomeNeuron id="%s" C="%s" G_c="%s" E_cell="%s" a_r="%s" a_d="%s" beta="%s" Vth="%s" spike_thresh="%s"/>\n'
+            + '<InteractomeNeuron id="%s" C="%s" G_c="%s" E_cell="%s" a_r="%s" a_d="%s" beta="%s" Vth="%s" V_init="%s" s_init="%s" spike_thresh="%s"/>\n'
             % (
                 self.id,
                 self.C,
@@ -365,6 +387,8 @@ class InteractomeNeuron:
                 self.a_d,
                 self.beta,
                 self.Vth,
+                self.V_init,
+                self.s_init,
                 self.spike_thresh
             )
         )
