@@ -18,7 +18,7 @@
 
         <Dynamics>
 
-            <DerivedVariable name="speer" dimension="voltage" select="peer/s"/>
+            <DerivedVariable name="speer" dimension="none" select="peer/s"/>
 
             <DerivedVariable name="i" exposure="i"  value="weight * conductance * speer * (erev-v)"/>
 

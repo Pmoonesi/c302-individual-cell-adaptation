@@ -75,8 +75,8 @@ def set_init_activity_bioparams(params, base, data_reader="KimDataReaderV3"):
 def setup(
     parameter_set,
     generate=False,
-    duration=500,
-    dt=0.05, #ms
+    duration=10000,
+    dt=0.1, #ms
     target_directory="experiments",
     muscles_to_include=[], #None,  # None => All!
     data_reader="KimDataReaderV3", #"KimDataReader", #"KimDataReaderV2", #"KimDataReaderV3", #"VarshneyDataReader", #"SpreadsheetDataReader",
@@ -100,7 +100,7 @@ def setup(
     ]
     # cells_to_plot = ["AVBL"]
 
-    stimuli_magnitude = "1.5nA"
+    stimuli_magnitude = "5nA"
 
     params.set_bioparameter(
         "unphysiological_offset_current", stimuli_magnitude, "Testing Full net", "0"
@@ -110,12 +110,12 @@ def setup(
         "unphysiological_offset_current_del", "0 ms", "Testing Full net", "0"
     )
     params.set_bioparameter(
-        "unphysiological_offset_current_dur", "400 ms", "Testing Full net", "0"
+        "unphysiological_offset_current_dur", "10000 ms", "Testing Full net", "0"
     )
 
     set_vth_bioparams(params, cells_to_stimulate, stimuli_magnitude)
 
-    set_init_potential_bioparams(params, "0 mV", data_reader=data_reader)
+    set_init_potential_bioparams(params, "-35 mV", data_reader=data_reader)
 
     set_init_activity_bioparams(params, "0", data_reader=data_reader)
 

@@ -13,7 +13,6 @@ ASSESSMENT:
 
 from neuroml import GapJunction
 from neuroml import PulseGenerator
-from neuroml import FixedFactorConcentrationModel
 
 from c302.bioparameters import c302ModelPrototype
 
@@ -42,11 +41,11 @@ class ParameterisedModel(c302ModelPrototype):
         )
 
         self.add_bioparameter(
-            "neuron_activity_rise", "0.666 per_ms", "BlindGuess", "0.1"
+            "neuron_activity_rise", "0.666 per_s", "BlindGuess", "0.1"
         )
 
         self.add_bioparameter(
-            "neuron_activity_decay", "3.33 per_ms", "BlindGuess", "0.1"
+            "neuron_activity_decay", "3.33 per_s", "BlindGuess", "0.1"
         )
 
         self.add_bioparameter(
@@ -93,24 +92,6 @@ class ParameterisedModel(c302ModelPrototype):
         )
         self.add_bioparameter(
             "neuron_to_muscle_elec_syn_gbase", "100 pS", "BlindGuess", "0.1"
-        )
-
-        #NOTE - these are here only because the c302 requires a concentration model if your model is conductance based
-        self.add_bioparameter(
-            "ca_conc_decay_time", "13.811870945509265 ms", "BlindGuess", "0.1"
-        )
-        self.add_bioparameter(
-            "ca_conc_rho", "0.000238919 mol_per_m_per_A_per_s", "BlindGuess", "0.1"
-        )
-
-        self.add_bioparameter(
-            "ca_conc_decay_time_muscle", "60.811870945509265 ms", "BlindGuess", "0.1"
-        )
-        self.add_bioparameter(
-            "ca_conc_rho_muscle",
-            "0.002238919 mol_per_m_per_A_per_s",
-            "BlindGuess",
-            "0.1",
         )
 
         self.add_bioparameter(

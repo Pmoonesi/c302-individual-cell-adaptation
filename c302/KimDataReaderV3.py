@@ -6,7 +6,7 @@ import os
 from c302 import print_
 
 spreadsheet_location = os.path.dirname(os.path.abspath(__file__)) + "/data/"
-spreadsheet_name = "KIMCopyOfVarshney_corrected.xlsx"
+spreadsheet_name = "KIMCopyOfVarshney_corrected_new.xlsx"
 
 READER_DESCRIPTION = (
     """Data extracted from %s for neuronal connectivity""" % spreadsheet_name
