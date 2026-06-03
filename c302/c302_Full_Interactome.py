@@ -78,8 +78,8 @@ def setup(
     duration=10000,
     dt=0.1, #ms
     target_directory="experiments",
-    muscles_to_include=[], #None,  # None => All!
-    data_reader="KimDataReaderV3", #"KimDataReader", #"KimDataReaderV2", #"KimDataReaderV3", #"VarshneyDataReader", #"SpreadsheetDataReader",
+    muscles_to_include=None,  # None => All!, [] => none.
+    data_reader="KimDataReaderV4", #"KimDataReader", #"KimDataReaderV2", #"KimDataReaderV3", #"VarshneyDataReader", #"SpreadsheetDataReader",
     param_overrides={},
     config_param_overrides={},
     verbose=True,
@@ -94,10 +94,9 @@ def setup(
     cells_to_stimulate = ["PLML", "PLMR"]
 
     cells_to_plot = [
-"AVBL", "AVBR", "DB1", "DB2", "DB3", "DB4", "DB5", "DB6", "DB7", "PVCL",
-"PVCR", "RIBL", "RIBR", "VB1", "VB2", "VB3", "VB4", "VB5", "VB6", "VB7",
+"AVBL", "AVBR", "DB1", "DB2", "DB3", "DB4", "DB5", "DB6", "DB7", "RIBL", "RIBR", "VB1", "VB2", "VB3", "VB4", "VB5", "VB6", "VB7",
 "VB8", "VB9", "VB10", "VB11"
-    ]
+    ] # "PVCL","PVCR"
     # cells_to_plot = ["AVBL"]
 
     stimuli_magnitude = "5nA"
