@@ -1088,7 +1088,7 @@ def generate(
             # decide what the cell_id will be
             if params.is_level_I():
                 # Find out if our cell is customized for I parameters or not
-                current_cell = params.get_cell(cell, "muscle")
+                current_cell = params.get_cell(muscle, "muscle")
                 if current_cell not in nml_doc.cells:
                     nml_doc.cells.append(current_cell)
             else:
@@ -1097,7 +1097,7 @@ def generate(
             cell_id = current_cell.id
 
             # add the string id to the cache dictionary
-            set_cell_id_string(cell, cell_id)
+            set_cell_id_string(muscle, cell_id)
             
             # build a Population data structure out of the cell name
             pop0 = Population(
