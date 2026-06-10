@@ -3,7 +3,7 @@
     <!-- Definition of new model for Cell-->
         
     <ComponentType name="InteractomeNeuron" 
-                extends="baseCell"
+                extends="baseCellMembPot"
                 description="Kim et al. 2019 neuron">
 
         <Parameter name="C" dimension="capacitance"/>
@@ -21,7 +21,7 @@
         <Attachments name="synapses" type="basePointCurrent"/>
 
         <Exposure name="s" dimension="none"/>
-        <Exposure name="v" dimension="voltage"/>  <!-- already in base -->
+        <Exposure name="v" dimension="voltage"/> 
 
         <Dynamics>
             <StateVariable name="v" dimension="voltage" exposure="v"/>
