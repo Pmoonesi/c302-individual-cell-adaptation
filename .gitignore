@@ -130,3 +130,4 @@ clean.sh
 osb-model-validation/
 requirements.txt
 experiments/
+examples/*
