@@ -1152,6 +1152,17 @@ def generate(
                 )
                 lems_info["muscle_activity_plots"].append(plot)
 
+            if current_cell.__class__.__name__ == "InteractomeNeuron":
+                plot = {}
+
+                plot["cell"] = muscle
+                plot["colour"] = get_random_colour_hex()
+                plot["quantity"] = "%s/0/%s/s" % (
+                    muscle,
+                    cell_id,
+                )
+                lems_info["muscle_activity_plots"].append(plot)
+
             save = {}
             save["cell"] = muscle
             save["quantity"] = "%s/0/%s/v" % (muscle, cell_id)
@@ -1169,6 +1180,15 @@ def generate(
                 save = {}
                 save["cell"] = muscle
                 save["quantity"] = "%s/0/%s/caConc" % (
+                    muscle,
+                    cell_id,
+                )
+                lems_info["muscles_activity_to_save"].append(save)
+
+            if current_cell.__class__.__name__ == "InteractomeNeuron":
+                save = {}
+                save["cell"] = muscle
+                save["quantity"] = "%s/0/%s/s" % (
                     muscle,
                     cell_id,
                 )

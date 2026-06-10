@@ -165,18 +165,30 @@ def plot_c302_results(
     if len(cells) > 0:
         c302.print_("Plotting neuron voltages")
 
+        default_template = "{0}/0/GenericNeuronCell/{1}"
+
         template = "{0}/0/GenericNeuronCell/{1}"
         if parameter_set.startswith("A") or parameter_set.startswith("B"):
             template = "{0}/0/generic_neuron_iaf_cell/{1}"
-        if parameter_set.startswith("D"):
+        elif parameter_set.startswith("D"):
             template = "{0}/0/{0}/{1}"
+        elif parameter_set.startswith("I"):
+            template = "{0}/0/{0}_neuron_cell/{1}"
 
         xvals = []
         yvals = []
         labels = []
 
         for cell in cells:
-            v = lems_results[template.format(cell, "v")]
+
+            try:
+                v = lems_results[template.format(cell, "v")]
+            except KeyError:
+                try:
+                    v = lems_results[default_template.format(cell, "v")]
+                except KeyError:
+                    print("Had trouble finding v of %s." % cell)
+                    continue
 
             xvals.append(times)
             labels.append(cell)
@@ -227,12 +239,18 @@ def plot_c302_results(
     if len(muscles) > 0:
         c302.print_("Plotting muscle voltages")
 
+        default_template_m = "{0}/0/GenericMuscleCell/{1}"
         template_m = "{0}/0/GenericMuscleCell/{1}"
+
         if parameter_set.startswith("A") or parameter_set.startswith("B"):
             template_m = "{0}/0/generic_muscle_iaf_cell/{1}"
 
         for muscle in muscles:
-            mv = lems_results[template_m.format(muscle, "v")]
+            try:
+                mv = lems_results[template_m.format(muscle, "v")]
+            except KeyError:
+                print("Had trouble finding v of %s." % muscle)
+                continue
 
             xvals.append(times)
             labels.append(muscle)
@@ -280,6 +298,8 @@ def plot_c302_results(
         if parameter_set.startswith("C") or parameter_set.startswith("D"):
             variable = "caConc"
             description = "[Ca2+]"
+        elif parameter_set.startswith("I"):
+            variable = "s"
 
         xvals = []
         yvals = []
@@ -292,7 +312,14 @@ def plot_c302_results(
             parameter_set,
         )
         for cell in cells:
-            a = lems_results[template.format(cell, variable)]
+            try:
+                a = lems_results[template.format(cell, variable)]
+            except KeyError:
+                try:
+                    a = lems_results[default_template.format(cell, variable)]
+                except KeyError:
+                    print("Had trouble finding activity of %s." % cell)
+                    continue
 
             xvals.append(times)
             yvals.append(a)
@@ -334,6 +361,8 @@ def plot_c302_results(
         if parameter_set.startswith("C") or parameter_set.startswith("D"):
             variable = "caConc"
             description = "[Ca2+]"
+        elif parameter_set.startswith("I"):
+            variable="s"
 
         xvals = []
         yvals = []
@@ -346,7 +375,14 @@ def plot_c302_results(
             parameter_set,
         )
         for m in muscles:
-            a = lems_results[template_m.format(m, variable)]
+            try:
+                a = lems_results[template_m.format(m, variable)]
+            except KeyError:
+                try:
+                    a = lems_results[default_template_m.format(m, variable)]
+                except KeyError:
+                    print("Had trouble finding activity of %s." % m)
+                    continue
 
             xvals.append(times)
             yvals.append(a)
@@ -725,6 +761,41 @@ def generate_conn_matrix(
 
     # _show_conn_matrix(data_m, 'Electrical (gap junction) conns to muscles',all_neuron_info,all_muscle_info, net.id)
 
+def patch_neuron_script(input_path, output_path=None):
+    if output_path is None:
+        output_path = input_path  # patch in place
+    
+    with open(input_path, 'r') as f:
+        content = f.read()
+    
+    # Fix v recording:
+    # m_CELLID_neuron_cell_CELLID[0].v  →  CELLID[0].v(0.5)
+    content = re.sub(
+        r'm_(\w+)_neuron_cell_\1\[0\]\.v',
+        r'\1[0].v(0.5)',
+        content
+    )
+
+    # Fix v recording for generic neuron cells:
+    # m_GenericNeuronCell_NEURONID[0].v  →  NEURONID[0].v(0.5)
+    content = re.sub(
+        r'm_GenericNeuronCell_(\w+)\[0\]\.v',
+        r'\1[0].v(0.5)',
+        content
+    )
+
+    # Fix v recording for muscle cells:
+    # m_GenericMuscleCell_MUSCLEID[0].v  →  MUSCLEID[0].v(0.5)
+    content = re.sub(
+        r'm_GenericMuscleCell_(\w+)\[0\]\.v',
+        r'\1[0].v(0.5)',
+        content
+    )
+
+    with open(output_path, 'w') as f:
+        f.write(content)
+    
+    print(f"Patched: {output_path}")
 
 if __name__ == "__main__":
     from neuroml.loaders import read_neuroml2_file
