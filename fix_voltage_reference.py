@@ -17,6 +17,14 @@ def patch_neuron_script(input_path, output_path=None):
         content
     )
 
+    # Fix v recording for generic neuron cells:
+    # m_GenericNeuronCell_NEURONID[0].v  →  NEURONID[0].v(0.5)
+    content = re.sub(
+        r'm_GenericNeuronCell_(\w+)\[0\]\.v',
+        r'\1[0].v(0.5)',
+        content
+    )
+
     # Fix v recording for muscle cells:
     # m_GenericMuscleCell_MUSCLEID[0].v  →  MUSCLEID[0].v(0.5)
     content = re.sub(
